@@ -11,6 +11,15 @@ services:
     networks:
       - launched-bot-net
       - npm-network
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   mongodb:
     image: mongo:4.4
@@ -24,6 +33,15 @@ services:
       - mongo_data:/data/db
     networks:
       - launched-bot-net
+    ulimits:
+      core:
+        soft: 0
+        hard: 0
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
     healthcheck:
       test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
       interval: 10s
