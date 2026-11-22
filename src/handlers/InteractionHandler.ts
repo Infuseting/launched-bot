@@ -16,6 +16,12 @@ export class InteractionHandler {
       await this.handleChatInput(interaction);
     } else if (interaction.isAutocomplete()) {
       await this.handleAutocomplete(interaction);
+    } else if (
+      interaction.isButton() ||
+      interaction.isAnySelectMenu() ||
+      interaction.isModalSubmit()
+    ) {
+      await this.client.componentDispatcher.dispatch(interaction);
     }
   }
 

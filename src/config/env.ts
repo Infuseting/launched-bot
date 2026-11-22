@@ -12,6 +12,7 @@ const envSchema = z.object({
   GUILD_ID: z.string().regex(snowflakeRegex, 'Identifiant GUILD_ID invalide (Snowflake requis)').optional(),
   OWNER_ID: z.string().regex(snowflakeRegex, 'Identifiant OWNER_ID invalide (Snowflake requis)').optional(),
   LOG_LEVEL: z.enum(['trace', 'debug', 'info', 'warn', 'error', 'fatal']).default('info'),
+  DATABASE_URL: z.string().url('DATABASE_URL PostgreSQL valide requise.'),
 });
 
 function parseEnvironment() {
@@ -24,6 +25,7 @@ function parseEnvironment() {
     GUILD_ID: process.env.GUILD_ID || undefined,
     OWNER_ID: process.env.OWNER_ID || undefined,
     LOG_LEVEL: process.env.LOG_LEVEL || (process.env.NODE_ENV === 'production' ? 'info' : 'debug'),
+    DATABASE_URL: process.env.DATABASE_URL,
   };
 
   const result = envSchema.safeParse(rawEnv);

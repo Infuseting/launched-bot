@@ -1,7 +1,8 @@
-import { ChatInputCommandInteraction } from 'discord.js';
+import { ChatInputCommandInteraction, RepliableInteraction } from 'discord.js';
 import type { BotClient } from '../client/BotClient.js';
 import { Logger } from '../utils/logger.js';
 import { AppEmbed } from '../utils/embeds.js';
+import { TicketError } from '../modules/tickets/domain/TicketErrors.js';
 
 export class ErrorHandler {
   private readonly logger = new Logger('ErrorHandler');
@@ -12,17 +13,42 @@ export class ErrorHandler {
     error: unknown,
     interaction: ChatInputCommandInteraction
   ): Promise<void> {
+    await this.handleInteractionError(error, interaction, `/${interaction.commandName}`);
+  }
+
+  public async handleInteractionError(
+    error: unknown,
+    interaction: RepliableInteraction,
+    context?: string
+  ): Promise<void> {
     const err = error instanceof Error ? error : new Error(String(error));
+    const interactionContext = context || ('customId' in interaction ? interaction.customId : 'Interaction');
 
-    this.logger.error(`Erreur lors de l'exécution de /${interaction.commandName}: ${err.message}`, {
-      err,
-      user: `${interaction.user.tag} (${interaction.user.id})`,
-      guildId: interaction.guildId ?? 'DM',
-    });
+    const isTicketDomainError = error instanceof TicketError;
 
-    const embed = new AppEmbed()
-      .setTitle('❌ Erreur d\'exécution')
-      .setDescription('Une erreur inattendue est survenue lors du traitement de cette commande.');
+    if (isTicketDomainError) {
+      this.logger.warn(`Règle métier ticket non respectée [${interactionContext}]: ${err.message}`, {
+        user: `${interaction.user.tag} (${interaction.user.id})`,
+        guildId: interaction.guildId ?? 'DM',
+      });
+    } else {
+      this.logger.error(`Erreur lors de l'exécution de [${interactionContext}]: ${err.message}`, {
+        err,
+        user: `${interaction.user.tag} (${interaction.user.id})`,
+        guildId: interaction.guildId ?? 'DM',
+      });
+    }
+
+    const embed = new AppEmbed();
+    if (isTicketDomainError) {
+      embed
+        .setTitle('⚠️ Action impossible')
+        .setDescription(err.message);
+    } else {
+      embed
+        .setTitle('❌ Erreur d\'exécution')
+        .setDescription('Une erreur inattendue est survenue lors du traitement de cette action.');
+    }
 
     const errorPayload = {
       embeds: [embed],
