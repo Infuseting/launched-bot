@@ -1,170 +1,127 @@
-# 🤖 Launched Bot
 
-Bot Discord compagnon officiel du launcher **Launched**, développé en **TypeScript** avec **Discord.js v14+** et une architecture modulaire orientée objet d'entreprise.
+[![Version][version-shield]](version-url)
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+<center><img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Discord-Bot&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient" /></center>
 
----
+<br />
 
-## 🚀 Caractéristiques
+[![Run on Repl.it](https://repl.it/badge/github/CorwinDev/Discord-Bot)](https://replit.com/@CorwinDeveloper/Discord-Bot-v14?v=1)
+[![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/import/github/CorwinDev/Discord-Bot)
 
-- **TypeScript ESM Moderne** : Typage strict, résolution `NodeNext`, exécution native.
-- **Patrons de Conception (Design Patterns)** :
-  - **Command Pattern** : Classe abstraite `BaseCommand` avec validation des options, cooldowns, permissions et support d'autocomplétion.
-  - **Observer / Event Pattern** : Classe abstraite `BaseEvent` typée sur les `ClientEvents` de Discord.js.
-  - **Extended Client & Managers** : `BotClient` centralise la gestion des commandes (`CommandManager`), événements (`EventManager`), cooldowns (`CooldownManager`) et erreurs (`ErrorHandler`).
-- **Validation d'Environnement** : Schéma strict avec **Zod** (prise en charge de `BOT_KEY` ou `DISCORD_TOKEN`, vérification Snowflake du `CLIENT_ID`).
-- **Système de Logs Haute Performance** : Basé sur **Pino** (format colorisé et lisible en dev via `pino-pretty`, format JSON structuré en production).
-- **Déploiement REST Découplé** : Script `pnpm deploy:commands` évitant les limites de taux (rate-limits) de Discord lors des recharges du bot.
-- **Rechargement à chaud automatique** : En mode développement avec `tsx watch`.
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/corwindev/Discord-Bot">
+    <img src="https://cdn.discordapp.com/attachments/778665159316209748/1055857473749274694/Corwin-1-modified.png" alt="Pbot-plus" width="200" height="200">
+  </a>
 
----
+  <h3 align="center">Discord-Bot</h3>
 
-## 📁 Architecture du projet
+  <p align="center">
+    Discord-bot is an updated version of <a href="https://github.com/DotwoodMedia/Dbot">Dbot</a>, an advanced Discord multipurpose bot containing more than 400 commands.<br> It can do Moderation, Tickets, Radio, Games, Giveaways, Customisation, Economy, Leveling, Invites, Messages, Utilities, Suggestions, Server Stats etc.<br> Unfortunately the owners stopped at the peak and decided to put the source online of which I made an updated version.
+    <br />
+    <br />
+    <a href="https://github.com/corwindev/discord-bot/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/corwindev/discord-bot/issues">Request Feature</a>
+  </p>
+</p>
 
-```text
-launched-bot/
-├── .env.example                       # Gabarit de configuration d'environnement
-├── package.json
-├── tsconfig.json
-├── pnpm-workspace.yaml
-├── scripts/
-│   └── deploy-commands.ts             # Déploiement des Slash Commands via l'API REST Discord
-└── src/
-    ├── index.ts                       # Point d'entrée & écoute des signaux système
-    ├── config/
-    │   └── env.ts                     # Validation Zod & normalisation de la configuration
-    ├── client/
-    │   └── BotClient.ts               # Extension du Client Discord.js & cycle de vie
-    ├── structures/
-    │   ├── BaseCommand.ts             # Contrat abstrait pour les commandes slash
-    │   └── BaseEvent.ts               # Contrat abstrait pour les écouteurs d'événements
-    ├── managers/
-    │   ├── CommandManager.ts          # Découverte automatique et chargement des commandes
-    │   ├── EventManager.ts            # Découverte automatique et liaison des événements
-    │   └── CooldownManager.ts         # Suivi des délais avec purge automatique (sweep)
-    ├── handlers/
-    │   ├── InteractionHandler.ts      # Routage des interactions, permissions & cooldowns
-    │   └── ErrorHandler.ts            # Gestion centralisée et sécurisée des erreurs
-    ├── utils/
-    │   └── logger.ts                  # Service de logs contextuel Pino
-    ├── commands/                      # Commandes slash réparties par domaine
-    │   ├── general/
-    │   │   ├── ping.ts                # Mesure latence API & WebSocket
-    │   │   └── help.ts                # Liste dynamique des commandes
-    │   └── system/
-    │       └── status.ts              # Uptime, mémoire et informations hôte
-    └── events/                        # Écouteurs d'événements Discord
-        ├── client/
-        │   ├── ready.ts               # Initialisation & notification de connexion
-        │   └── error.ts               # Capture des erreurs de la Gateway
-        └── interaction/
-            └── interactionCreate.ts   # Transmission des interactions au routeur
+<!-- NOTICE -->
+
+### <img src="https://cdn.discordapp.com/emojis/1055803759831294013.png" width="20px" height="20px"> 》Notice 
+> You may not claim this as your own! The original source was created by [Dotwood Media](https://github.com/DotwoodMedia) and [Graphix Development](https://github.com/GraphixDevelopment). The source is modified and updated by me(CorwinDev)
+
+> Discord-Bot is a multipurpose Discord bot base in [Discord.js](https://github.com/Discordjs/discordjs)
+If you like this repository, feel free to leave a star ⭐ to motivate me!
+
+<!-- ABOUT THE PROJECT -->
+
+## <img src="https://cdn.discordapp.com/emojis/859424401186095114.png" width="20px" height="20px">》Description 
+[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=corwindev&repo=Discord-bot&theme=tokyonight)](https://github.com/corwindev/Discord-bot)
+## <img src="https://cdn.discordapp.com/emojis/852881450667081728.gif" width="20px" height="20px">》Feature
+- [x] Slash Commands 
+- [x] Upto date with Discord.js v14
+- [x] Automod
+- [x] Custom Commands
+- [x] Music Commands
+- [x] Tickets
+- [x] Utility Commands
+- [x] Suggestions 
+- [x] Reaction Roles
+- [x] Family
+- [x] Giveaways 
+- [x] Easy to use
+- [x] Customizable
+- [x] And much more
+- [x] Don't wanna host it yourself? [Use our public bot](https://discord.com/api/oauth2/authorize?client_id=860390761307439114&permissions=8&scope=bot%20applications.commands)
+## <img src="https://cdn.discordapp.com/emojis/1028680849195020308.png" width="25px" height="25px">》Screenshots
+<br />
+<p align="center">
+  <a href="https://github.com/corwindev/discord-bot">
+    <img src="https://cdn.discordapp.com/attachments/778665159316209748/1055832339328024666/207117434-d98356b1-bf19-418e-9e12-0ef83e0d9a21.png">
+  </a>
+</p>
+
+## <img src="https://cdn.discordapp.com/emojis/1009754836314628146.gif" width="25px" height="25px">》Requirements
+- NodeJs v17+
+- Java v13 for lavalink server.
+- Discord Token. Get it from [Discord Developers Portal](https://discord.com/developers/applications)
+- Mongo Database URL. Get it from [MongoDB](https://cloud.mongodb.com/v2/635277bf9f5c7b5620db28a4#clusters)
+- Giphy API Token. Get it from [Giphy Developers Portal](https://developers.giphy.com/)
+- OpenAI API Key `for ai chatbot`. Get it from [OpenAi Developers Portal](https://beta.openai.com/account/api-keys)
+- ClientID `for loading slash commands.` [Discord Developers Portal](https://discord.com/developers/applications)
+- Spotify client ID `for Spotify support` [Click here to get](https://developer.spotify.com/dashboard/login)
+- Spotify client Secret `for Spotify support` [Click here to get](https://developer.spotify.com/dashboard/login)
+
+## <img src="https://cdn.discordapp.com/emojis/814216203466965052.png" width="25px" height="25px">》Installation Guide
+
+### <img src="https://cdn.discordapp.com/emojis/1028680849195020308.png" width="15px" height="15px"> Installing via [NPM](https://www.npmjs.com/)
+Clone the repo by running
+```bash
+git clone https://github.com/Corwindev/Discord-Bot.git
 ```
-
----
-
-## 🛠️ Commandes Disponibles
-
-| Commande | Rôle |
-|---|---|
-| `pnpm dev` | Démarre le bot en mode développement avec rechargement automatique (`tsx watch`) |
-| `pnpm deploy:commands` | Enregistre les commandes Slash auprès de l'API REST de Discord (serveur test si `GUILD_ID` défini, sinon global) |
-| `pnpm deploy:commands:global` | Force l'enregistrement des commandes sur l'ensemble des serveurs (global) |
-| `pnpm typecheck` | Vérifie les types TypeScript sans compiler (`tsc --noEmit`) |
-| `pnpm build` | Compile le code source TypeScript vers `./dist` |
-| `pnpm start` | Exécute la version compilée en production |
-
----
-
-## ⚙️ Configuration (`.env`)
-
-Copiez le fichier `.env.example` en `.env` :
+### After cloning Fill all requirement in `.env` **(rename `.env.example` to `.env`)**, then run
 
 ```bash
-cp .env.example .env
+npm install
+```
+To start your bot 
+
+```js
+node src/index.js
 ```
 
-Renseignez vos variables :
-```env
-BOT_KEY=votre_token_secret_discord
-CLIENT_ID=1552256142317453423
+## <img src="https://cdn.discordapp.com/emojis/1036083490292244493.png" width="15px" height="15px">》Support Server
+[![DiscordBanner](https://invidget.switchblade.xyz/techpoint-1016942011024158782)](https://discord.gg/techpoint-1016942011024158782)
 
-# Optionnel : Ajoutez l'identifiant d'un serveur Discord de test pour des mises à jour de commandes instantanées
-# GUILD_ID=123456789012345678
+[Support Server](https://discord.gg/techpoint-1016942011024158782) - Discord-Bot's Support Server Invite
 
-NODE_ENV=development
-LOG_LEVEL=info
-```
+# <img src="https://cdn.discordapp.com/emojis/1015745034076819516.png" width="25px" height="25px">》Faq
+> How to get access to Developers Commands? You will have to set them up via MongoDB or run the below command.
 
----
-
-## 🎨 Charte Graphique & Embeds (`AppEmbed`)
-
-La constante de couleur orange du logo est définie dans `src/config/constants.ts` :
-- `COLORS.ORANGE` : `0xF4762F`
-
-Pour créer des embeds utilisant cette couleur par défaut, vous pouvez utiliser la classe `AppEmbed` ([`src/utils/embeds.ts`](src/utils/embeds.ts)) qui hérite de `EmbedBuilder` de Discord.js :
-
-```typescript
-import { AppEmbed } from '../../utils/embeds.js';
-
-// Embed pré-configuré avec COLORS.ORANGE
-const embed = new AppEmbed()
-  .setTitle('🚀 Titre de mon Embed')
-  .setDescription('Ceci est un embed aux couleurs du bot.');
-```
-
----
-
-## 💡 Ajouter une nouvelle commande Slash
-
-Créez simplement un fichier dans `src/commands/<categorie>/<nom>.ts` :
-
-```typescript
-import { ChatInputCommandInteraction, SlashCommandBuilder } from 'discord.js';
-import { BaseCommand } from '../../structures/BaseCommand.js';
-import type { BotClient } from '../../client/BotClient.js';
-
-export default class MaCommande extends BaseCommand {
-  public readonly data = new SlashCommandBuilder()
-    .setName('bonjour')
-    .setDescription('Dit bonjour à l\'utilisateur.');
-
-  public constructor() {
-    super({
-      category: 'Général',
-      cooldown: 5, // Cooldown de 5 secondes par utilisateur
-      guildOnly: false, // Accessible en MP ou non
-    });
-  }
-
-  public async execute(interaction: ChatInputCommandInteraction, client: BotClient): Promise<void> {
-    await interaction.reply(`Bonjour ${interaction.user.username} ! 👋`);
-  }
-}
-```
-
-Déployez-la ensuite avec :
 ```bash
-pnpm deploy:commands
+npm run add-dev YOUR_Discord_ID
 ```
+# Donate
 
----
+ By Donating, You Will Help Me To Maintain This Project 
 
-## 💡 Ajouter un nouvel événement Discord
+<img src="https://cdn.discordapp.com/emojis/809085860632985630.png" width="15px" height="15px"> 》[Sponsor](https://github.com/sponsors/CorwinDev)
 
-Créez un fichier dans `src/events/<domaine>/<nom>.ts` :
-
-```typescript
-import { Events, GuildMember } from 'discord.js';
-import { BaseEvent } from '../../structures/BaseEvent.js';
-import type { BotClient } from '../../client/BotClient.js';
-
-export default class MemberJoinEvent extends BaseEvent<Events.GuildMemberAdd> {
-  public readonly name = Events.GuildMemberAdd;
-
-  public execute(client: BotClient, member: GuildMember): void {
-    client.logger.info(`Nouveau membre : ${member.user.tag} a rejoint ${member.guild.name}`);
-  }
-}
-```
-Le bot charge automatiquement tous les fichiers de commandes et d'événements sans configuration manuelle supplémentaire !
+[version-shield]: https://img.shields.io/github/package-json/v/CorwinDev/Discord-Bot?style=for-the-badge
+[version-url]: https://github.com/brblacky/WaveMusic
+[contributors-shield]: https://img.shields.io/github/contributors/CorwinDev/Discord-Bot.svg?style=for-the-badge
+[contributors-url]: https://github.com/Corwindev/Discord-Bot/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Corwindev/Discord-Bot.svg?style=for-the-badge
+[forks-url]: https://github.com/Corwindev/Discord-Bot/network/members
+[stars-shield]: https://img.shields.io/github/stars/Corwindev/Discord-Bot.svg?style=for-the-badge
+[stars-url]: https://github.com/Corwindev/Discord-Bot/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Corwindev/Discord-Bot.svg?style=for-the-badge
+[issues-url]: https://github.com/Corwindev/Discord-Bot/issues
+[license-shield]: https://img.shields.io/github/license/Corwindev/Discord-Bot.svg?style=for-the-badge
+[license-url]: https://github.com/Corwindev/Discord-Bot/blob/master/LICENSE
